@@ -5,7 +5,7 @@ from shapely import transform
 from shapely.affinity import translate, scale
 from shapely.ops import linemerge, unary_union
 from shapely.wkt import loads
-import overpass, overpy
+import overpy
 from ast import literal_eval
 
 bbox_lat = 41.89100; bbox_lon = 12.47750

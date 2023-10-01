@@ -1,0 +1,15 @@
+Package            Version  
+------------------ ---------
+certifi            2023.7.22
+charset-normalizer 3.3.0    
+geojson            3.0.1    
+idna               3.4      
+numpy              1.24.4   
+overpy             0.6      
+pip                20.0.2   
+pkg-resources      0.0.0    
+pygame             2.5.2    
+requests           2.31.0   
+setuptools         44.0.0   
+shapely            2.0.1    
+urllib3            2.0.5    
