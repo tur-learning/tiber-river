@@ -160,4 +160,4 @@ cython_debug/
 #.idea/
 
 # Tiber River Project
-printmaps.png
+printmaps*.png

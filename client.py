@@ -130,18 +130,18 @@ if __name__ == "__main__":
     attributes = {
         "Fileformat": "png",
         "Scale": 5000,
-        "PrintWidth": 600,
-        "PrintHeight": 600,
-        "Latitude": 40.751,
-        "Longitude": -73.9515,
+        "PrintWidth": 400,
+        "PrintHeight": 1200,
+        "Latitude": 41.89, #41.9149, #41.89
+        "Longitude": 12.47, #12.4716, #12.47
         "Style": "osm-carto",
         "Projection": "3857",
         "HideLayers": "admin-low-zoom,admin-mid-zoom,admin-high-zoom,admin-text",
         "UserObjects": [
-            {
-                "Style": "<PolygonSymbolizer fill='white' fill-opacity='1.0' />",
-                "WellKnownText": "POLYGON((0.0 0.0, 0.0 600.0, 600.0 600.0, 600.0 0.0, 0.0 0.0), (20.0 20.0, 20.0 580.0, 580.0 580.0, 580.0 20.0, 20.0 20.0))"
-            },
+            #{ # Contorno Bianco
+            #    "Style": "<PolygonSymbolizer fill='white' fill-opacity='1.0' />",
+            #    "WellKnownText": "POLYGON((0.0 0.0, 0.0 600.0, 600.0 600.0, 600.0 0.0, 0.0 0.0), (20.0 20.0, 20.0 580.0, 580.0 580.0, 580.0 20.0, 20.0 20.0))"
+            #},
             {
                 "Style": "<LineSymbolizer stroke='dimgray' stroke-width='1.0' stroke-linecap='square' />",
                 "WellKnownText": "LINESTRING(20.0 20.0, 20.0 580.0, 580.0 580.0, 580.0 20.0, 20.0 20.0)"
@@ -150,10 +150,10 @@ if __name__ == "__main__":
                 "Style": "<LineSymbolizer stroke='dimgray' stroke-width='1.5' stroke-linecap='square' />",
                 "WellKnownText": "MULTILINESTRING((5.0 0.0, 0.0 0.0, 0.0 5.0), (5.0 600.0, 0.0 600.0, 0.0 595.0), (595.0 600.0, 600.0 600.0, 600.0 595.0), (595.0 0.0, 600.0 0.0, 600.0 5.0))"
             },
-            {
-                "Style": "<TextSymbolizer fontset-name='fontset-2' size='80' fill='dimgray' opacity='0.6' allow-overlap='true'>'New York'</TextSymbolizer>",
-                "WellKnownText": "POINT(90.0 560.0)"
-            },
+            #{ # Scritta New York
+            #    "Style": "<TextSymbolizer fontset-name='fontset-2' size='80' fill='dimgray' opacity='0.6' allow-overlap='true'>'New York'</TextSymbolizer>",
+            #    "WellKnownText": "POINT(90.0 560.0)"
+            #},
             {
                 "Style": "<TextSymbolizer fontset-name='fontset-0' size='12' fill='dimgray' orientation='90' allow-overlap='true'>'© OpenStreetMap contributors'</TextSymbolizer>",
                 "WellKnownText": "POINT(11 300.0)"
