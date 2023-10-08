@@ -38,7 +38,8 @@ trans_x = 0.
 trans_y = -1.
 rot_z = 180.
 width = 10.
-camera_position = np.array([12.4716, 41.9149, 0.004])
+height = 1.
+camera_position = np.array([12.47, 41.89, 0.004])
 line_coords = get_tiber()
 
 def load_texture(image_path):
@@ -61,7 +62,7 @@ def load_texture(image_path):
 
 def display():
     global fov
-    global x_eye, y_eye, trans_x, trans_y, rot_z
+    global x_eye, y_eye, trans_x, trans_y, rot_z, height
     global line_coords, camera_position, width
     # Calcolo della posizione della camera in base alla rotazione attorno all'asse Z
     x_eye = math.sin(math.radians(rot_z))
@@ -72,7 +73,7 @@ def display():
     # Set up perspective projection
     glMatrixMode(GL_PROJECTION)
     glLoadIdentity()
-    gluPerspective(fov, 16/9, 1.0, 2.0)  # 45° field of view, 1:1 aspect ratio, near and far planes
+    gluPerspective(fov, 16/9, 0.1, 10.0)  # 45° field of view, 1:1 aspect ratio, near and far planes
 
     glMatrixMode(GL_MODELVIEW)
     glLoadIdentity()
@@ -83,8 +84,8 @@ def display():
     #          0, 1, 0)  # Up vector (camera's up direction)
     
     # Utilizzo delle variabili di traslazione e rotazione per impostare la camera
-    gluLookAt(x_eye + trans_x, y_eye + trans_y, 1,  # Eye position (camera position)
-              0 + trans_x, 0 + trans_y, -1,  # Look-at point (camera is looking at this point)
+    gluLookAt(x_eye + trans_x, y_eye + trans_y, height,  # Eye position (camera position)
+              0 + trans_x, 0 + trans_y, -height,  # Look-at point (camera is looking at this point)
               0, 0, 1)  # Up vector (camera's up direction along Z-axis)
 
     glEnable(GL_TEXTURE_2D)
@@ -120,7 +121,7 @@ def keyboard(key, x, y):
     glutPostRedisplay()
 
 def special_keys(key, x, y):
-    global rot_z, trans_x, trans_y
+    global rot_z, trans_x, trans_y, height
     if key == GLUT_KEY_F2:
         rot_z += 1.0
     elif key == GLUT_KEY_F3:
@@ -133,6 +134,10 @@ def special_keys(key, x, y):
         trans_x -= 0.1
     elif key == GLUT_KEY_RIGHT:
         trans_x += 0.1
+    elif key == GLUT_KEY_F4:
+        height -= 0.01
+    elif key == GLUT_KEY_F5:
+        height += 0.01
     glutPostRedisplay()
 
 def main():
@@ -146,7 +151,7 @@ def main():
     glutKeyboardFunc(keyboard)
     glutSpecialFunc(special_keys)
 
-    texture_id = load_texture("printmaps_1.png")
+    texture_id = load_texture("printmaps_0.png")
 
     glutMainLoop()
 
