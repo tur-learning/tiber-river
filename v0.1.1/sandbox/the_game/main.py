@@ -1,29 +1,10 @@
-import pygame
+from engine.game_loop import GameLoopManager
+from engine.renderer import ImageRenderer
 
-# Initialize pygame
-pygame.init()
+def main():
+    image_renderer = ImageRenderer(800, 600, 'assets/printmap.png')
+    game_manager = GameLoopManager(image_renderer)
+    game_manager.main_loop()
 
-# Screen dimensions
-WIDTH, HEIGHT = 800, 600
-
-# Create a screen and set the caption
-screen = pygame.display.set_mode((WIDTH, HEIGHT))
-pygame.display.set_caption("Pygame Blit Example")
-
-# Load the image
-image = pygame.image.load('printmap.png')
-
-# Main loop
-running = True
-while running:
-    for event in pygame.event.get():
-        if event.type == pygame.QUIT:
-            running = False
-
-    # Draw the image
-    screen.blit(image, (0, 0))
-
-    # Update the display
-    pygame.display.flip()
-
-pygame.quit()
+if __name__ == '__main__':
+    main()
