@@ -1,0 +1,4 @@
+﻿Pillow==10.1.0
+pygame==2.5.2
+PyOpenGL==3.1.7
+PyOpenGL-accelerate==3.1.7
