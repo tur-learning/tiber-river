@@ -77,7 +77,8 @@ class InteractiveView:
             print(self.ly)
             self.update_origin()
         if keys[pygame.K_x]:
-            self.K -= 0.01
+            if self.K > 0.2:
+                self.K -= 0.01
         if keys[pygame.K_RETURN]:
             self.capture_screenshot()
 
