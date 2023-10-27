@@ -1,0 +1,21 @@
+version: '3'
+
+services:
+  walkintiber:
+    build: ./walkintiber
+    command: python walkintiber/manage.py runserver 0.0.0.0:8000
+    volumes:
+      - .:/code
+      - shared-data:/code/walkintiber/assets/osm  # Mount the shared volume at /data
+    ports:
+      - "8000:8000"
+
+  vitruvius:
+    build: ./vitruvius  # path to your Java project with the Dockerfile
+    command: ["/app/watcher.sh"]
+    volumes:
+      - shared-data:/app/data  # Also mount the same volume here
+    # No need to expose ports since it's not a web service.
+
+volumes:
+  shared-data:  # Declare the volume here
