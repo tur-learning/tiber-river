@@ -1,4 +1,4 @@
-version: '3'
+version: '3.8'
 
 services:
   walkintiber:
@@ -16,6 +16,13 @@ services:
     volumes:
       - shared-data:/app/data  # Also mount the same volume here
     # No need to expose ports since it's not a web service.
+
+  michelangelo:
+    build: ./michelangelo
+    volumes:
+      - type: volume
+        source: shared-data
+        target: /app/data
 
 volumes:
   shared-data:  # Declare the volume here

@@ -4,7 +4,7 @@
 DATA_DIR="/app/data"
 
 # Directory where processed files are to be moved
-PROCESSED_DIR="/app/data/processed"
+PROCESSED_DIR="/app/data/build"
 
 # Create the processed directory if it does not exist
 mkdir -p "$PROCESSED_DIR"
@@ -23,15 +23,16 @@ do
 
     # Full paths for the input and output files
     INPUT_FILE="$FILEPATH"
-    OUTPUT_FILE="${FILENAME%.osm}.obj"  # Change extension to .obj
+    OUTPUT_FILE="$DATA_DIR/${FILENAME%.osm}.obj"  # Change extension to .obj
 
     # Run the OSM2World command
-    ./osm2world/osm2world.sh -i "$INPUT_FILE" -o "$DATA_DIR/$OUTPUT_FILE"
+    ./osm2world/osm2world.sh -i "$INPUT_FILE" -o "$OUTPUT_FILE"
 
     # If OSM2World command was successful, move the .osm file to the processed directory
     if [ $? -eq 0 ]; then
-      echo "Processing completed for '$FILENAME'. Moving to 'processed' directory."
+      echo "Processing completed for '$FILENAME'. Moving to 'build' directory."
       mv "$INPUT_FILE" "$PROCESSED_DIR/"
+      mv "$OUTPUT_FILE" "$PROCESSED_DIR/"
     else
       echo "An error occurred during processing. '$FILENAME' will remain in '$DATA_DIR'."
     fi
