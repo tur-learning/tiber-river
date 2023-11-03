@@ -8,7 +8,11 @@ to test the django microservice only endpoints run the following command:
 
 then test the endpoints using [this](https://www.postman.com/andreagalle/workspace/my-workspace/collection/30905772-552a27e5-df0e-4b8c-8bc5-7ff9bd69e300?action=share&creator=30905772) Postman collection or (for simpler requests) copy/paste URLs like this:
 
-    http://localhost:8001/osmclient/post_osm_relations_ways/?bbox=12.4642000,41.8828000,12.481900,41.8964000
+    http://localhost:8001/osmclient/get_buildings/?bbox=41.8828000,12.4642000,41.8964000,12.481900
+
+or 
+
+    http://localhost:8001/osmclient/get_highways/?bbox=41.8828000,12.4642000,41.8964000,12.481900
 
 ## the Docker stack
 
