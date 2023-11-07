@@ -1,0 +1,58 @@
+# This file was created by OSM2World 0.4.0-SNAPSHOT - https://osm2world.org
+
+
+newmtl BUILDING_DEFAULT_0
+Ns 92.156863
+Ka 0.5019608 0.4509804 0.27450982
+Kd 0.5019608 0.4509804 0.27450982
+Ks 0.000000 0.000000 0.000000
+Ke 0.000000 0.000000 0.000000
+map_Ka test4_buildings.obj_textures/tex-Plaster002_Color-1175447457309335745.png
+map_Kd test4_buildings.obj_textures/tex-Plaster002_Color-1175447457309335745.png
+Ni 1
+illum 2
+
+newmtl ROOF_DEFAULT_0
+Ns 92.156863
+Ka 0.4 0.0 0.0
+Kd 0.4 0.0 0.0
+Ks 0.000000 0.000000 0.000000
+Ke 0.000000 0.000000 0.000000
+map_Ka test4_buildings.obj_textures/tex-RoofingTiles010_Color-6816502774111224903.png
+map_Kd test4_buildings.obj_textures/tex-RoofingTiles010_Color-6816502774111224903.png
+Ni 1
+illum 2
+
+newmtl MAT_1_0
+Ns 92.156863
+Ka 0.5019608 0.4509804 0.27450982
+Kd 0.5019608 0.4509804 0.27450982
+Ks 0.000000 0.000000 0.000000
+Ke 0.000000 0.000000 0.000000
+map_Ka test4_buildings.obj_textures/tex-Plaster002_Color-1175447457309335745.png
+map_Kd test4_buildings.obj_textures/tex-Plaster002_Color-1175447457309335745.png
+Ni 1
+illum 2
+
+newmtl MAT_1_1
+Ns 92.156863
+Ka 0.5019608 0.5019608 0.5019608
+Kd 0.5019608 0.5019608 0.5019608
+Ks 0.000000 0.000000 0.000000
+Ke 0.000000 0.000000 0.000000
+map_Ka test4_buildings.obj_textures/tex-MarekCompositeWall00001_transparent-7939054643908036850.png
+map_Kd test4_buildings.obj_textures/tex-MarekCompositeWall00001_transparent-7939054643908036850.png
+Ni 1
+illum 2
+
+newmtl TERRAIN_DEFAULT_0
+Ns 92.156863
+Ka 0.5019608 0.5019608 0.5019608
+Kd 0.5019608 0.5019608 0.5019608
+Ks 0.000000 0.000000 0.000000
+Ke 0.000000 0.000000 0.000000
+map_Ka test4_buildings.obj_textures/tex-Ground003_Color-5850203880815232605.png
+map_Kd test4_buildings.obj_textures/tex-Ground003_Color-5850203880815232605.png
+Ni 1
+illum 2
+

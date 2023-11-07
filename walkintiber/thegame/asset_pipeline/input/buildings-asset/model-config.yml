@@ -1,0 +1,4 @@
+collide:
+  - group_name: Building*
+    method: polyset
+    flags: keep,descend

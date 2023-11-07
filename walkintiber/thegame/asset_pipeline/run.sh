@@ -1,0 +1,2 @@
+python -m panda_utils.assetpipeline input/roads-asset roads/models/highways roads/maps preblend blend2bam bam2egg egg2bam
+python -m panda_utils.assetpipeline input/buildings-asset buildings/models/buildings buildings/maps preblend blend2bam bam2egg collide[] egg2bam
