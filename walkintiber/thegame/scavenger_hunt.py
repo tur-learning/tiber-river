@@ -2,12 +2,17 @@ from direct.showbase.ShowBase import ShowBase
 from math import tan, radians, cos, sin
 from direct.actor.Actor import Actor
 from direct.task import Task
-from panda3d.core import CollisionTraverser, CollisionHandlerPusher, CollisionHandlerQueue, BitMask32
+from panda3d.core import CollisionTraverser, CollisionHandlerPusher, CollisionTube, BitMask32
 from panda3d.core import AmbientLight, DirectionalLight
 from panda3d.core import Vec4, Vec3
-from panda3d.core import WindowProperties
+from panda3d.core import WindowProperties, DepthOffsetAttrib
+#from panda3d.core import *
 import simplepbr
 from game_object import *
+import json
+import mercator
+
+#loadPrcFileData("", "load-file-type p3assimp")
 
 class Game(ShowBase):
     def __init__(self):
@@ -33,12 +38,26 @@ class Game(ShowBase):
 
         render.setShaderAuto()
 
-        self.roads = loader.loadModel("asset_pipeline/built/roads/models/highways/roads-asset.bam")
-        self.roads.reparentTo(render)
-        self.buildings = loader.loadModel("asset_pipeline/built/buildings/models/buildings/buildings-asset.bam")
+        #self.roads = loader.loadModel("asset_pipeline/built/roads/models/highways/roads-asset.bam")
+        #self.roads.reparentTo(render)
+        self.buildings = loader.loadModel("asset_pipeline/built/buildings/models/buildings/palazzi.egg")
         self.buildings.reparentTo(render)
+        #self.buildings.set_p(90);
+        self.roads = loader.loadModel("asset_pipeline/built/roads/models/highways/streets.egg")
+        self.roads.reparentTo(render)
+        self.water = loader.loadModel("asset_pipeline/built/buildings/models/buildings/tiber.egg")
+        self.water.reparentTo(render)
+        #self.water.set_p(90);
+        #self.roads=render.attachNewNode(loader.loadModel("asset_pipeline/input/roads-asset/sample_streets.obj"))
+        #self.roads.setAttrib(DepthOffsetAttrib.make(1))
+        #self.roads.set_p(90);
         # self.tiberriver.setCollideMask(BitMask32.bit(1))
         # print(self.tiberriver.node())
+
+        #self.collision_node = self.buildings.find("**/collision")
+        #self.setup_collision()
+
+        self.setBackgroundColor(0.53, 0.80, 0.92, 1)
 
         self.camera.setPos(0, 0, 500)
         self.camera.setP(-90)
@@ -78,33 +97,51 @@ class Game(ShowBase):
 
         self.pusher = CollisionHandlerPusher()
         self.cTrav = CollisionTraverser()
-        self.handler = CollisionHandlerQueue()
+        # self.handler = CollisionHandlerPusher()
 
         self.pusher.setHorizontal(True)
 
-        """ wallSolid = CollisionTube(-8.0, 0, 0, 8.0, 0, 0, 0.2)
-        wallNode = CollisionNode("wall")
-        wallNode.addSolid(wallSolid)
-        wall = render.attachNewNode(wallNode)
-        wall.setY(8.0)
+        jsonpath = "../walkintiber/assets/json/sample.json"
+        with open(jsonpath) as file:
+            tubes = json.load(file)
 
-        wallSolid = CollisionTube(-8.0, 0, 0, 8.0, 0, 0, 0.2)
-        wallNode = CollisionNode("wall")
-        wallNode.addSolid(wallSolid)
-        wall = render.attachNewNode(wallNode)
-        wall.setY(-8.0)
+        converter = mercator.Mercator()
 
-        wallSolid = CollisionTube(0, -8.0, 0, 0, 8.0, 0, 0.2)
-        wallNode = CollisionNode("wall")
-        wallNode.addSolid(wallSolid)
-        wall = render.attachNewNode(wallNode)
-        wall.setX(8.0)
+        for way in tubes.values():
+            for n in range(len(way["nodes"])):
+                nodeStart = way["nodes"][n]
+                nodeEnd = way["nodes"][(n+1)%len(way["nodes"])]
+                wallSolid = CollisionTube(converter.get_x(nodeStart[0]), converter.get_y(nodeStart[1]), 0, 
+                                          converter.get_x(nodeEnd[0]), converter.get_y(nodeEnd[1]), 0, 0.2)
+                wallNode = CollisionNode("wall")
+                wallNode.addSolid(wallSolid)
+                wall = render.attachNewNode(wallNode)
 
-        wallSolid = CollisionTube(0, -8.0, 0, 0, 8.0, 0, 0.2)
+        """ wallSolid = CollisionTube(-96.8479919433594, 92.4960021972656, 0, 
+                                  -96.0609893798828, 113.390998840332, 0, 0.5)
         wallNode = CollisionNode("wall")
         wallNode.addSolid(wallSolid)
         wall = render.attachNewNode(wallNode)
-        wall.setX(-8.0) """
+
+        wallSolid = CollisionTube(-114.804992675781, 114.97200012207, 0,
+                                  -117.738990783691, 93.7429962158203, 0, 0.5)
+        wallNode = CollisionNode("wall")
+        wallNode.addSolid(wallSolid)
+        wall = render.attachNewNode(wallNode)
+
+        wallSolid = CollisionTube(-114.804992675781, 114.97200012207, 0,
+                                  -96.0609893798828, 113.390998840332, 0, 0.5)
+        wallNode = CollisionNode("wall")
+        wallNode.addSolid(wallSolid)
+        wall = render.attachNewNode(wallNode)
+
+        wallSolid = CollisionTube(-96.8479919433594, 92.4960021972656, 0, 
+                                  -117.738990783691, 93.7429962158203, 0, 0.5)
+        wallNode = CollisionNode("wall")
+        wallNode.addSolid(wallSolid)
+        wall = render.attachNewNode(wallNode) """
+
+        wall.show()
 
         self.updateTask = taskMgr.add(self.update, "update")
         #self.updateTask = taskMgr.add(self.updateCameraTask, "UpdateCameraTask")
@@ -112,7 +149,20 @@ class Game(ShowBase):
 
         self.player = Player()
 
-        self.tempEnemy = WalkingEnemy(Vec3(-500, 0, 0))
+        #self.tempEnemy = WalkingEnemy(Vec3(-500, 0, 0))
+
+        # Add the character's collision node to the traverser and the handler.
+        #self.cTrav.addCollider(self.player.collider, self.pusher)
+        #self.pusher.addCollider(self.player.collider, self.render)
+
+        self.cTrav.showCollisions(render)
+
+        # The environment's collision polygons should have been loaded as "into" objects,
+        # so you don't need to add them to the traverser.
+        # If you want to make them visible for debugging, you can loop through them like this:
+        self.collision_nodes = self.buildings.findAllMatches('**/+CollisionNode')
+        for collision_node in self.collision_nodes:
+            collision_node.show()
 
     def updateKeyMap(self, controlName, controlState):
         self.keyMap[controlName] = controlState
@@ -123,7 +173,7 @@ class Game(ShowBase):
 
         self.player.update(self.keyMap, dt)
 
-        self.tempEnemy.update(self.player, dt)
+        #self.tempEnemy.update(self.player, dt)
 
         if self.keyMap["increment"]:
             self.increment_theta()
@@ -196,6 +246,29 @@ class Game(ShowBase):
 
         # The task should continue running each frame; returning Task.cont will ensure this.
         return Task.cont
+    
+    def setup_collision(self):
+        # Initialize the collision traverser.
+        self.cTrav = CollisionTraverser()
+
+        # Initialize the collision handler.
+        self.pusher = CollisionHandlerPusher()
+
+        # Setup a collision node for the character, for example a sphere
+        self.collide_node_path = self.render.attachNewNode(CollisionNode('charCollideNode'))
+        self.collide_node_path.node().addSolid(CollisionSphere(0, 0, 0, 1))
+
+        # Set the collision mask
+        self.collide_node_path.node().setIntoCollideMask(BitMask32.allOff())
+        self.collide_node_path.node().setFromCollideMask(BitMask32.bit(0))
+
+        # Attach the collision node to the traverser and the handler
+        self.cTrav.addCollider(self.collide_node_path, self.pusher)
+        self.pusher.addCollider(self.collide_node_path, self.render)
+
+        # Show the collision nodes for debugging purposes
+        self.collision_node.show()
+
 
 
 game = Game()

@@ -24,11 +24,12 @@ class GameObject():
         colliderNode = CollisionNode(colliderName)
         colliderNode.addSolid(CollisionSphere(0, 0, 0, 0.3))
 
-        # colliderNode.setFromCollideMask(CollideMask.bit(0))
-        # colliderNode.setIntoCollideMask(CollideMask.allOff())
+        colliderNode.setFromCollideMask(CollideMask.bit(0))
+        colliderNode.setIntoCollideMask(CollideMask.allOff())
 
         self.collider = self.actor.attachNewNode(colliderNode)
         self.collider.setPythonTag("owner", self)
+        self.collider.show()
 
 
     def update(self, dt):
