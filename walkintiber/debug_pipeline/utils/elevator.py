@@ -5,10 +5,10 @@ from matplotlib.colors import LogNorm
 import utils.mercator as mercator
 
 class Elevator():
-    def __init__(self, bbox="41.88856,12.47106,41.89253,12.48202"):
+    def __init__(self, dem_file, bbox="41.88856,12.47106,41.89253,12.48202"):
         # Load the TIFF file
         # https://tinitaly.pi.ingv.it/data_1.1/w46075_s10/w46075_s10.zip
-        dem_file = '/home/dario/Downloads/w46075_s10.tif'
+        #dem_file = '/home/dario/Downloads/w46075_s10.tif'
         self.dataset = gdal.Open(dem_file)
         band = self.dataset.GetRasterBand(1)
 
@@ -69,7 +69,8 @@ class Elevator():
         source_srs.ImportFromEPSG(4326)  # WGS84
 
         target_srs = osr.SpatialReference()
-        target_srs.ImportFromEPSG(32632)  # WGS 84 / UTM zone 32N
+        target_srs.ImportFromWkt(dataset.GetProjection())
+        #target_srs.ImportFromEPSG(32632)  # WGS 84 / UTM zone 32N
 
         transform = osr.CoordinateTransformation(source_srs, target_srs)
 
